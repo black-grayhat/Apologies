@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>I'm Sorry</title>
+<style>
+  /* ... existing CSS ... */
+  
+  /* Email Notification Styles */
+  .notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 15px 25px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #4CAF50, #8BC34A);
+    color: white;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    z-index: 1000;
+  }
+  
+  .notification.show {
+    transform: translateX(0);
+  }
+  
+  /* Form Container Styles */
+  .form-container {
+    display: none;
+    animation: fadeIn 0.5s ease;
+  }
+  
+  .form-container.show {
+    display: block;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>I'm Sorry 💖</h1>
+  
+  <div id="apologyContent">
+    <!-- ... existing content ... -->
+    
+    <div class="buttons">
+      <p>Can I be granted another chance?</p>
+      <button class="yes" id="yesBtn">Yes</button>
+      <button class="no" id="noBtn">No</button>
+    </div>
+  </div>
+  
+  <!-- Formspree Integration -->
+  <div class="form-container" id="formContainer">
+    <h2 style="color: #4CAF50;">Thank you for giving me a chance! 💚</h2>
+    <p>Please share your thoughts with me:</p>
+    
+    <form id="contactForm" action="https://formspree.io/f/mlgwoode" method="POST">
+      <div class="form-group">
+        <label for="name">Your Name (optional)</label>
+        <input type="text" id="name" name="name" value="pookie" readonly>
+      </div>
+      
+      <div class="form-group">
+        <label for="email">Your Email (optional)</label>
+        <input type="email" id="email" name="email" placeholder="So I can respond to you">
+      </div>
+      
+      <div class="form-group">
+        <label for="message">What's on your mind?</label>
+        <textarea id="message" name="message" placeholder="Share your thoughts, feelings, or what you'd like from me going forward..." required></textarea>
+      </div>
+      
+      <input type="hidden" name="_subject" value="She said YES! 💛">
+      <input type="hidden" name="response" value="YES - She's giving you another chance">
+      
+      <button type="submit" class="submit-btn" id="submitBtn">Send My Response</button>
+      
+      <div class="status-message" id="statusMessage"></div>
+    </form>
+  </div>
+  
+  <!-- Email Notification -->
+  <div class="notification" id="emailNotification">
+    Email notification sent!
+  </div>
+</div>
+
+<script>
+  const noBtn = document.getElementById('noBtn');
+  const yesBtn = document.getElementById('yesBtn');
+  const apologyContent = document.getElementById('apologyContent');
+  const formContainer = document.getElementById('formContainer');
+  const contactForm = document.getElementById('contactForm');
+  const statusMessage = document.getElementById('statusMessage');
+  const submitBtn = document.getElementById('submitBtn');
+  const emailNotification = document.getElementById('emailNotification');
+  
+  // Playful Yes Button Animation
+  let scale = 1;
+  const scaleIncrement = 0.1;
+  
+  noBtn.addEventListener('click', () => {
+    // Increase button size
+    scale += scaleIncrement;
+    yesBtn.style.transform = `scale(${scale})`;
+    
+    // Add animation effect
+    yesBtn.style.transition = 'transform 0.3s ease';
+    setTimeout(() => {
+      yesBtn.style.transition = 'none';
+    }, 300);
+    
+    // Add floating effect
+    yesBtn.style.animation = 'floatUp 0.5s ease';
+    setTimeout(() => {
+      yesBtn.style.animation = 'none';
+    }, 500);
+  });
+  
+  // Yes button click handler
+  yesBtn.addEventListener('click', () => {
+    // Hide apology content and show form
+    apologyContent.classList.add('hidden');
+    formContainer.classList.add('show');
+    
+    // Pre-fill name field
+    document.getElementById('name').value = 'pookie';
+    document.getElementById('name').readOnly = true;
+    
+    // Show email notification
+    showEmailNotification();
+  });
+  
+  // Form submission handling
+  contactForm.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    // Disable submit button and show loading state
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending...';
+    statusMessage.className = 'status-message';
+    statusMessage.textContent = 'Sending your message...';
+    statusMessage.style.display = 'block';
+    
+    try {
+      const response = await fetch(contactForm.action, {
+        method: 'POST',
+        body: new FormData(contactForm),
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+      
+      if (response.ok) {
+        statusMessage.className = 'status-message success';
+        statusMessage.textContent = '✓ Message sent! Thank you for giving me another chance. 💛';
+        contactForm.reset();
+        
+        // Optional: Hide the form after successful submission
+        setTimeout(() => {
+          formContainer.innerHTML = `
+            <h2 style="color: #4CAF50;">Message Received! 💚</h2>
+            <p>Thank you so much. I'll reach out to you soon. This means the world to me. 💛</p>
+          `;
+        }, 2000);
+      } else {
+        throw new Error('Form submission failed');
+      }
+    } catch (error) {
+      statusMessage.className = 'status-message error';
+      statusMessage.textContent = '✗ Oops! Something went wrong. Please try again or text me directly.';
+    } finally {
+      // Re-enable submit button
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Send My Response';
+    }
+  });
+  
+  // Email Notification Function
+  function showEmailNotification() {
+    emailNotification.classList.add('show');
+    setTimeout(() => {
+      emailNotification.classList.remove('show');
+    }, 3000);
+  }
+</script>
+</body>
+</html>
