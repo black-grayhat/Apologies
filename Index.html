@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Favorite Girl 🎀</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #fffafa 0%, #ffe4e1 100%);
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            color: #b05e6f;
+            text-align: center;
+        }
+
+        .heart-icon {
+            font-size: 60px;
+            margin-bottom: 10px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 40px 25px;
+            border-radius: 40px;
+            box-shadow: 0 15px 35px rgba(255, 182, 193, 0.3);
+            max-width: 380px;
+            border: 2px solid #fff;
+            transition: all 0.5s ease;
+        }
+
+        h1 { font-size: 26px; margin-bottom: 15px; font-weight: 300; letter-spacing: 1px; }
+        p { line-height: 1.7; color: #7d4f58; font-size: 16px; }
+
+        .coupon-list {
+            margin-top: 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .coupon {
+            background: #fff;
+            padding: 18px;
+            border: 1.5px dashed #ffc0cb;
+            border-radius: 20px;
+            font-size: 14px;
+            color: #d87093;
+        }
+
+        .btn {
+            margin-top: 35px;
+            background: #ffb6c1;
+            color: white;
+            border: none;
+            padding: 16px 35px;
+            border-radius: 30px;
+            font-size: 15px;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(255, 182, 193, 0.5);
+        }
+
+        /* Form Styling */
+        #apologyForm {
+            display: none;
+            flex-direction: column;
+            text-align: left;
+            gap: 15px;
+        }
+
+        label { font-size: 14px; margin-bottom: -10px; margin-left: 10px; font-weight: bold; }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 15px;
+            border: 1px solid #f8bbd0;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+
+    <div class="heart-icon">🌸</div>
+
+    <div class="card" id="messageCard">
+        <h1>Hi beautiful...</h1>
+        <p>I put this together because I wanted to show you I’m truly sorry. I hate that things have been off, and I want to fix it.</p>
+        
+        <div class="coupon-list">
+            <div class="coupon">✨ One Long, Warm Hug</div>
+            <div class="coupon">💋 A Million Apologetic Kisses</div>
+            <div class="coupon">💐 A Bouquet of Your Favorites</div>
+        </div>
+
+        <button class="btn" onclick="showForm()">Click here when you're ready to talk 🎀</button>
+    </div>
+
+    <div class="card" id="formCard" style="display:none;">
+        <h1>Talk to me... 🕊️</h1>
+        <form action="https://formspree.io/f/mlgwoode" method="POST" id="apologyForm" style="display:flex;">
+            
+            <label>Your Email</label>
+            <input type="email" name="email" placeholder="So I can reply to you..." required>
+
+            <label>How are you feeling?</label>
+            <textarea name="how_she_feels" rows="3" placeholder="Be honest with me..." required></textarea>
+
+            <label>What are you thinking?</label>
+            <textarea name="what_she_thinks" rows="3" placeholder="Anything on your mind..." required></textarea>
+
+            <label>Can I have another chance?</label>
+            <select name="another_chance" required>
+                <option value="">Choose one...</option>
+                <option value="yes">Yes, let's talk 💖</option>
+                <option value="maybe">Maybe, I need more time 🌸</option>
+                <option value="not_yet">Not yet 🧸</option>
+            </select>
+
+            <button type="submit" class="btn">Send to my heart ✨</button>
+        </form>
+    </div>
+
+    <script>
+        function showForm() {
+            document.getElementById('messageCard').style.display = 'none';
+            document.getElementById('formCard').style.display = 'block';
+        }
+    </script>
+
+</body>
+</html>
